@@ -1,0 +1,29 @@
+{
+  "plugins": [
+    {
+      "loader": "java_plain",
+      "id": "township",
+      "name": "Township",
+      "version": "1.0.0-SNAPSHOT",
+      "main-class": "com.expansemc.township.plugin.Township",
+      "description": "A towny plugin.",
+      "links": {
+        "homepage": "https://ore.spongepowered.org/doot/Township",
+        "source": "https://github.com/ExpanseMC/township",
+        "issues": "https://github.com/ExpanseMC/township/issues"
+      },
+      "contributors": [
+        {
+          "name": "doot",
+          "description": "Lead Developer"
+        }
+      ],
+      "dependencies": [
+        {
+          "id": "spongeapi",
+          "version": "8.0.0"
+        }
+      ]
+    }
+  ]
+}
