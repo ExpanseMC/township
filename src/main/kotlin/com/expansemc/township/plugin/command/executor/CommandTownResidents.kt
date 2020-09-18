@@ -4,6 +4,7 @@ import com.expansemc.township.plugin.command.Parameters
 import com.expansemc.township.plugin.command.TransactionalCommandExecutor
 import com.expansemc.township.plugin.command.requireOne
 import com.expansemc.township.plugin.storage.dao.ResidentDao
+import com.expansemc.township.plugin.storage.dao.TownCitizenDao
 import com.expansemc.township.plugin.storage.table.ResidentTable
 import com.expansemc.township.plugin.storage.dao.TownDao
 import com.expansemc.township.plugin.util.TextUI
@@ -19,12 +20,12 @@ object CommandTownResidents : TransactionalCommandExecutor {
     override fun Transaction.execute(context: CommandContext): CommandResult {
         val town: TownDao = context.requireOne(Parameters.townOrOwn)
 
-        val residents: SizedIterable<ResidentDao> = town.residents
+        val residents: SizedIterable<TownCitizenDao> = town.citizens
             .orderBy(ResidentTable.name to SortOrder.ASC)
 
         val pagination: PaginationList = TextUI.pagination("${residents.count()} Residents of ${town.name}") {
-            residents.mapTo(destination = this) { resident: ResidentDao ->
-                TextUI.residentInfo(resident.name)
+            residents.mapTo(destination = this) { citizen: TownCitizenDao ->
+                TextUI.residentInfo(citizen.resident.name)
             }
         }
 

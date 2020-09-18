@@ -2,7 +2,8 @@ package com.expansemc.township.plugin.storage.dao
 
 import com.expansemc.township.plugin.storage.table.intermediate.ResidentFriendTable
 import com.expansemc.township.plugin.storage.table.ResidentTable
-import com.expansemc.township.plugin.storage.table.intermediate.ResidentTownRoleTable
+import com.expansemc.township.plugin.storage.table.TownCitizenTable
+import com.expansemc.township.plugin.storage.table.intermediate.TownCitizenRoleTable
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -35,7 +36,7 @@ class ResidentDao(id: EntityID<Int>) : IntEntity(id) {
     /**
      * @see ResidentTable.town
      */
-    var town: TownDao? by TownDao optionalReferencedOn ResidentTable.town
+    val citizen: TownCitizenDao? by TownCitizenDao optionalBackReferencedOn TownCitizenTable.resident
 
     /**
      * @see ResidentFriendTable
@@ -46,11 +47,6 @@ class ResidentDao(id: EntityID<Int>) : IntEntity(id) {
      * @see ResidentFriendTable
      */
     var reverseFriends: SizedIterable<ResidentDao> by ResidentDao.via(ResidentFriendTable.friend, ResidentFriendTable.resident)
-
-    /**
-     * @see ResidentTownRoleTable
-     */
-    var townRoles: SizedIterable<TownRoleDao> by TownRoleDao.via(ResidentTownRoleTable.resident, ResidentTownRoleTable.townRole)
 
     fun addFriend(friend: ResidentDao) {
         ResidentFriendTable.insert {

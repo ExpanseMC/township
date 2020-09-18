@@ -4,6 +4,7 @@ import com.expansemc.township.plugin.command.TransactionalCommandExecutor
 import com.expansemc.township.plugin.command.requireOwnTown
 import com.expansemc.township.plugin.command.requireSelfResident
 import com.expansemc.township.plugin.storage.dao.ResidentDao
+import com.expansemc.township.plugin.storage.dao.TownCitizenDao
 import com.expansemc.township.plugin.storage.dao.TownDao
 import com.expansemc.township.plugin.util.TextUI
 import net.kyori.adventure.text.TextComponent
@@ -18,11 +19,15 @@ object CommandTownLeave : TransactionalCommandExecutor {
         val resident: ResidentDao = context.requireSelfResident()
         val town: TownDao = context.requireOwnTown()
 
-        if (resident.id == town.owner.id) {
+        if (resident.citizen != town.owner) {
             throw CommandException(TextComponent.of("You must set a new owner first, or use '/town delete'."))
         }
 
-        resident.town = null
+        TownCitizenDao.new {
+            this.town = town
+            this.resident = resident
+        }
+
         context.sendMessage(
             TextComponent.of("Left the town of ").append(TextUI.townInfo(town.name))
         )

@@ -89,10 +89,10 @@ object TextUI {
             command = "/township:resident info $name"
         )
 
-    fun command(base: String, args: String): TextComponent =
+    fun command(alias: String, args: String): TextComponent =
         TextComponent.builder()
             .append("- /", NamedTextColor.GRAY)
-            .append("$base ", NamedTextColor.WHITE)
+            .append("$alias ", NamedTextColor.WHITE)
             .append(args, NamedTextColor.YELLOW)
             .build()
 

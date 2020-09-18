@@ -5,6 +5,7 @@ import com.expansemc.township.plugin.command.TransactionalCommandExecutor
 import com.expansemc.township.plugin.command.requireOne
 import com.expansemc.township.plugin.command.requireSelfResident
 import com.expansemc.township.plugin.storage.dao.ResidentDao
+import com.expansemc.township.plugin.storage.dao.TownCitizenDao
 import com.expansemc.township.plugin.storage.dao.TownDao
 import com.expansemc.township.plugin.util.TextUI
 import net.kyori.adventure.text.TextComponent
@@ -18,7 +19,7 @@ object CommandTownJoin : TransactionalCommandExecutor {
     override fun Transaction.execute(context: CommandContext): CommandResult {
         val resident: ResidentDao = context.requireSelfResident()
 
-        if (resident.town != null) {
+        if (resident.citizen != null) {
             throw CommandException(TextComponent.of("You must leave your current town first."))
         }
 
@@ -28,7 +29,11 @@ object CommandTownJoin : TransactionalCommandExecutor {
             throw CommandException(TextComponent.of("That town is not open to new members."))
         }
 
-        resident.town = town
+        val citizen: TownCitizenDao = TownCitizenDao.new {
+            this.town = town
+            this.resident = resident
+        }
+
         context.sendMessage(TextComponent.of("Joined the town of ").append(TextUI.townInfo(town.name)))
         return CommandResult.success()
     }

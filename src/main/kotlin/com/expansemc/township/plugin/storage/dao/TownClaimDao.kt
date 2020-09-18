@@ -28,5 +28,7 @@ class TownClaimDao(id: EntityID<Int>) : IntEntity(id) {
 
     var town: TownDao by TownDao referencedOn TownClaimTable.town
 
+    var group: TownClaimDao? by TownClaimDao optionalReferencedOn TownClaimTable.group
+
     val warps: SizedIterable<TownWarpDao> by TownWarpDao referrersOn TownWarpTable.claim
 }

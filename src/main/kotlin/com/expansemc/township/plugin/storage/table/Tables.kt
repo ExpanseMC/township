@@ -1,8 +1,7 @@
 package com.expansemc.township.plugin.storage.table
 
 import com.expansemc.township.plugin.Township
-import com.expansemc.township.plugin.storage.table.intermediate.ResidentFriendTable
-import com.expansemc.township.plugin.storage.table.intermediate.TownRolePermissionTable
+import com.expansemc.township.plugin.storage.table.intermediate.*
 import com.expansemc.township.plugin.storage.transaction
 import org.jetbrains.exposed.sql.SchemaUtils
 
@@ -14,9 +13,14 @@ object Tables {
         Township.DATABASE.transaction {
             SchemaUtils.createMissingTablesAndColumns(
                 ResidentFriendTable,
-                ResidentTable,
-                TownClaimTable,
+                TownCitizenRoleTable,
+                TownClaimGroupPermissionOverrideTable,
+                TownResidentInviteTable,
                 TownRolePermissionTable,
+                TownWarpRoleTable,
+                ResidentTable,
+                TownClaimGroupTable,
+                TownClaimTable,
                 TownRoleTable,
                 TownTable,
                 TownWarpTable

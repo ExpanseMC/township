@@ -20,4 +20,6 @@ object ResidentFriendTable : Table("resident_friends") {
      * The resident's friend.
      */
     val friend: Column<EntityID<Int>> = reference("friend", ResidentTable, onDelete = ReferenceOption.CASCADE)
+
+    override val primaryKey: PrimaryKey = PrimaryKey(resident, friend)
 }

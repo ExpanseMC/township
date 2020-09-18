@@ -114,7 +114,7 @@ object Parameters {
                     ?: throw CommandException(TextComponent.of("You must specify a town name."))
                 val resident: ResidentDao = ResidentDao.findByPlayerId(player.uniqueId)
                     ?: throw CommandException(TextComponent.of("You must specify a town name."))
-                resident.town
+                resident.citizen?.town
                     ?: throw CommandException(TextComponent.of("You must specify a town name."))
             }
         }

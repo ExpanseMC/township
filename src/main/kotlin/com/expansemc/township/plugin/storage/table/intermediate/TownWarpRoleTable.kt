@@ -21,4 +21,6 @@ object TownWarpRoleTable : Table("town_warp_roles") {
      * The warp's permitted role.
      */
     val role: Column<EntityID<Int>> = reference("role", TownRoleTable, onDelete = ReferenceOption.CASCADE).index()
+
+    override val primaryKey: PrimaryKey = PrimaryKey(warp, role)
 }

@@ -3,6 +3,7 @@ package com.expansemc.township.plugin.command.executor
 import com.expansemc.township.plugin.command.Parameters
 import com.expansemc.township.plugin.command.TransactionalCommandExecutor
 import com.expansemc.township.plugin.storage.dao.ResidentDao
+import com.expansemc.township.plugin.storage.dao.TownCitizenDao
 import com.expansemc.township.plugin.storage.dao.TownDao
 import com.expansemc.township.plugin.storage.table.TownTable
 import com.expansemc.township.plugin.util.TextUI
@@ -25,7 +26,7 @@ object CommandTownCreate : TransactionalCommandExecutor {
         val resident: ResidentDao = ResidentDao.findByPlayerId(player.uniqueId)
             ?: throw CommandException(TextComponent.of("Must be a resident to use this command!"))
 
-        if (resident.town != null) {
+        if (resident.citizen != null) {
             throw CommandException(TextComponent.of("You must leave your current town first."))
         }
 
@@ -33,13 +34,18 @@ object CommandTownCreate : TransactionalCommandExecutor {
             throw CommandException(TextComponent.of("A town with the name '$name' already exists."))
         }
 
+        val citizen: TownCitizenDao = TownCitizenDao.new {
+            this.town = null
+            this.resident = resident
+        }
+
         val town: TownDao = TownDao.new {
             this.name = name
             this.open = false
-            this.owner = resident
+            this.owner = citizen
         }
 
-        resident.town = town
+        citizen.town = town
 
         val message: TextComponent = TextComponent.builder("The town of ", NamedTextColor.GRAY)
             .append(TextUI.townInfo(name))

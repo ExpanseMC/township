@@ -20,7 +20,7 @@ object CommandResidentInfo : TransactionalCommandExecutor {
             add(TextUI.property("Id", resident.id.value.toString()))
             add(TextUI.property("Name", resident.name))
 
-            when (val town: TownDao? = resident.town) {
+            when (val town: TownDao? = resident.citizen?.town) {
                 null -> add(TextUI.property("Town", "<none>"))
                 else -> add(
                     TextUI.clickableProperty(

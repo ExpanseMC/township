@@ -32,6 +32,11 @@ object TownClaimTable : IntIdTable("town_claims") {
      */
     val town: Column<EntityID<Int>> = reference("town", TownTable, onDelete = ReferenceOption.CASCADE).index()
 
+    /**
+     * The claim's optionally associated claim group.
+     */
+    val group: Column<EntityID<Int>?> = optReference("group", TownClaimGroupTable, onDelete = ReferenceOption.SET_NULL).index()
+
     init {
         uniqueIndex(world, chunkX, chunkZ)
     }

@@ -2,9 +2,9 @@ package com.expansemc.township.plugin.storage.dao
 
 import com.expansemc.township.plugin.storage.table.intermediate.TownRolePermissionTable
 import com.expansemc.township.plugin.storage.table.TownRoleTable
-import com.expansemc.township.plugin.storage.table.intermediate.ResidentTownRoleTable
+import com.expansemc.township.plugin.storage.table.intermediate.TownCitizenRoleTable
 import com.expansemc.township.plugin.storage.table.intermediate.TownWarpRoleTable
-import com.expansemc.township.plugin.storage.util.columnReferencedOn
+import com.expansemc.township.plugin.storage.util.columnBackReferencedOn
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -24,13 +24,13 @@ class TownRoleDao(id: EntityID<Int>) : IntEntity(id) {
      * The permissions granted by this role.
      */
     val permissions: SizedIterable<ResourceKey>
-            by TownRolePermissionTable.permission columnReferencedOn TownRolePermissionTable.townRole
+            by TownRolePermissionTable.permission columnBackReferencedOn TownRolePermissionTable.role
 
     /**
      * The residents who have this role.
      */
-    var residents: SizedIterable<ResidentDao>
-            by ResidentDao.via(ResidentTownRoleTable.townRole, ResidentTownRoleTable.resident)
+    var residents: SizedIterable<TownCitizenDao>
+            by TownCitizenDao.via(TownCitizenRoleTable.role, TownCitizenRoleTable.citizen)
 
     /**
      * The warps permitted by this role.

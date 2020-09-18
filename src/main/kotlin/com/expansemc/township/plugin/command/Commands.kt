@@ -14,6 +14,7 @@ object Commands {
 
     val resident: Command.Parameterized = command {
         setPermission("township.resident.base")
+        setExecutor(HelpCommand("Resident Commands", "resident"))
 
         child("info", "i") {
             setPermission("township.resident.info.base")
@@ -29,6 +30,7 @@ object Commands {
 
         child("friend", "f") {
             setPermission("township.resident.friend.base")
+            setExecutor(HelpCommand("Resident Friend Commands", "resident friend"))
 
             child("add") {
                 setPermission("township.resident.friend.add.base")
@@ -60,10 +62,11 @@ object Commands {
 
     val town: Command.Parameterized = command {
         setPermission("township.town.base")
-        setExecutor(CommandTown)
+        setExecutor(HelpCommand("Town Commands", "town"))
 
         child("claim", "c") {
             setPermission("township.town.claim.base")
+            setExecutor(HelpCommand("Town Claim Commands", "town claim"))
 
             child("add") {
                 setPermission("township.town.claim.add.base")
@@ -129,6 +132,7 @@ object Commands {
 
         child("role", "r") {
             setPermission("township.town.role.base")
+            setExecutor(HelpCommand("Town Role Commands", "town role"))
 
             child("list", "l") {
                 setPermission("township.town.role.list.base")
@@ -138,6 +142,7 @@ object Commands {
 
         child("set") {
             setPermission("township.town.set.base")
+            setExecutor(HelpCommand("Town Set Commands", "town set"))
 
             child("open") {
                 setPermission("township.town.set.open.base")
@@ -149,6 +154,7 @@ object Commands {
 
         child("warp", "w") {
             setPermission("township.town.warp.base")
+            setExecutor(HelpCommand("Town Warp Commands", "town warp"))
 
             child("add") {
                 setPermission("township.town.warp.add.base")

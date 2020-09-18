@@ -16,7 +16,7 @@ class TownDao(id: EntityID<Int>) : IntEntity(id) {
 
     var name: String by TownTable.name
 
-    var owner: ResidentDao by ResidentDao referencedOn TownTable.owner
+    var owner: TownCitizenDao by TownCitizenDao referencedOn TownTable.owner
 
     var open: Boolean by TownTable.open
 
@@ -24,7 +24,9 @@ class TownDao(id: EntityID<Int>) : IntEntity(id) {
 
     val claims: SizedIterable<TownClaimDao> by TownClaimDao referrersOn TownClaimTable.town
 
-    val residents: SizedIterable<ResidentDao> by ResidentDao optionalReferrersOn ResidentTable.town
+    val claimGroups: SizedIterable<TownClaimGroupDao> by TownClaimGroupDao referrersOn TownClaimGroupTable.town
+
+    val citizens: SizedIterable<TownCitizenDao> by TownCitizenDao optionalReferrersOn TownCitizenTable.town
 
     val roles: SizedIterable<TownRoleDao> by TownRoleDao referrersOn TownRoleTable.town
 

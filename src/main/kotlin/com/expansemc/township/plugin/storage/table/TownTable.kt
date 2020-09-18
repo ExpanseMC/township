@@ -22,7 +22,7 @@ object TownTable : IntIdTable("towns") {
      *
      * Note: Citizens who own towns cannot have their data deleted while they are still owner.
      */
-    val owner: Column<EntityID<Int>> = reference("owner", ResidentTable, onDelete = ReferenceOption.RESTRICT).uniqueIndex()
+    val owner: Column<EntityID<Int>> = reference("owner", TownCitizenTable, onDelete = ReferenceOption.RESTRICT).uniqueIndex()
 
     /**
      * Whether the town is joinable without invitation.

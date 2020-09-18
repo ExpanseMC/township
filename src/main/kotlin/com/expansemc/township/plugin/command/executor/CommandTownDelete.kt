@@ -19,7 +19,7 @@ object CommandTownDelete : TransactionalCommandExecutor {
         val resident: ResidentDao = context.requireSelfResident()
         val town: TownDao = context.requireOwnTown()
 
-        if (resident != town.owner) {
+        if (resident.citizen != town.owner) {
             throw CommandException(TextComponent.of("Only the town owner can delete the town."))
         }
 

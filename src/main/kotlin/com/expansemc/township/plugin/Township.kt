@@ -51,7 +51,6 @@ class Township {
                 ResidentDao.new {
                     this.playerId = event.player.uniqueId
                     this.name = event.player.name
-                    this.town = null
                 }
 
                 LOGGER.info("Loaded new user into resident table: ${event.player.name}")

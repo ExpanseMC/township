@@ -24,20 +24,26 @@ object CommandTownInfo : TransactionalCommandExecutor {
     internal fun getPagination(town: TownDao): PaginationList =
         TextUI.pagination("Town: ${town.name}") {
             add(TextUI.property("Name", town.name))
-            add(
-                TextUI.clickableProperty(
-                    name = "Owner",
-                    value = town.owner.name,
-                    hover = "Click here to see owner information.",
-                    command = "/township:resident info ${town.owner.name}"
-                )
-            )
+            town.owner.let {
+                if (it == null) {
+                    add(TextUI.property("Owner", "<none>"))
+                } else {
+                    add(
+                        TextUI.clickableProperty(
+                            name = "Owner",
+                            value = it.resident.name,
+                            hover = "Click here to see owner information.",
+                            command = "/township:resident info ${it.resident.name}"
+                        )
+                    )
+                }
+            }
             add(TextUI.boolProperty("Open", town.open))
             add(TextUI.timestampProperty("Created-At", town.createdAt))
             add(
                 TextUI.clickableProperty(
                     name = "Residents",
-                    value = "${town.residents.count()} residents",
+                    value = "${town.citizens.count()} residents",
                     hover = "Click here to see all residents.",
                     command = "/township:town residents ${town.name}"
                 )

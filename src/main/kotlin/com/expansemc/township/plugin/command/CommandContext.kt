@@ -18,7 +18,7 @@ fun CommandContext.requireSelfResident(): ResidentDao =
         ?: throw CommandException(TextComponent.of("You must be a resident to do that."))
 
 fun CommandContext.getOwnTown(): TownDao? =
-    this.getSelfResident()?.town
+    this.getSelfResident()?.citizen?.town
 
 fun CommandContext.requireOwnTown(): TownDao =
     this.getOwnTown()

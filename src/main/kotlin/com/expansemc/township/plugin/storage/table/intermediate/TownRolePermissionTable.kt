@@ -16,14 +16,12 @@ object TownRolePermissionTable : Table("town_role_permissions") {
     /**
      * The town role.
      */
-    val townRole: Column<EntityID<Int>> = reference("town_role", TownRoleTable, onDelete = ReferenceOption.CASCADE).index()
+    val role: Column<EntityID<Int>> = reference("role", TownRoleTable, onDelete = ReferenceOption.CASCADE).index()
 
     /**
      * The town role's permission.
      */
     val permission: Column<ResourceKey> = resourceKey("permission")
 
-    init {
-        uniqueIndex(townRole, permission)
-    }
+    override val primaryKey: PrimaryKey = PrimaryKey(role, permission)
 }
